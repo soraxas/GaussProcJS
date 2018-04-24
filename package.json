@@ -1,0 +1,39 @@
+{
+  "name": "gaussprocjs",
+  "version": "0.1.0",
+  "description": "Gaussian Process inference in JavaScript",
+  "main": "src/index.js",
+  "dependencies": {
+    "browserify-shim": "^3.8.14",
+    "numjs": "^0.15.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package:browserify": "browserify ./src/index.js -o ./dist/gaussproc.js",
+    "package:minify": "minify ./dist/gaussproc.js -o ./dist/gaussproc.min.js",
+    "package": "npm run package:browserify && npm run package:minify",
+    "prepackage": "./node_modules/.bin/rimraf dist/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soraxas/GaussProcJS.git"
+  },
+  "keywords": [
+    "Gaussian",
+    "Process",
+    "GP",
+    "probability",
+    "inference"
+  ],
+  "author": "Tin Yiu Lai",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/soraxas/GaussProcJS/issues"
+  },
+  "homepage": "https://github.com/soraxas/GaussProcJS",
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "babel-minify": "^0.4.0",
+    "rimraf": "^2.6.2"
+  }
+}
