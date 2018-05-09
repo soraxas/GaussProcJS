@@ -8,9 +8,9 @@
  * @return {2d array}        Resultant matrix (the original obj)
  */
 function mirror_matrix(matrix) {
-  for (var i = 0; i < matrix.shape[0]; ++i) {
+  for (let i = 0; i < matrix.shape[0]; ++i) {
     // go to index j that's one after the diagonal
-    for (var j = i + 1; j < matrix.shape[0]; ++j) {
+    for (let j = i + 1; j < matrix.shape[0]; ++j) {
       // top right block of indices
       matrix.set(j, i, matrix.get(i, j));
     }
@@ -25,8 +25,8 @@ function mirror_matrix(matrix) {
  * @return {[type]}   [description]
  */
 function covariance(a, b, k) {
-  var k = function() {
-    var diff = a - b;
+  let k = function() {
+    let diff = a - b;
     return sigma_f * sigma_f * Math.exp(-(diff * diff) / (2 * l));
   }
 

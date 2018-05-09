@@ -4,44 +4,35 @@
 class Kernels {
 
   constructor(paras) {
-    Kernels.prototype.include_sigma_n = true
-    if (paras) {
-      if (paras['sigma_f'])
-        Kernels.prototype.sigma_f = paras['sigma_f'];
-      if (paras['sigma_n'])
-        Kernels.prototype.sigma_n = paras['sigma_n'];
-      if (paras['length'])
-        this.length = paras['length'];
-        Kernels.prototype.length = paras['length'];
+
+    this.set_parameters = (paras) => {
+      this.sigma_f         = paras['sigma_f'];
+      this.sigma_n         = paras['sigma_n'];
+      this.length          = paras['length'];
+      this.include_sigma_n = paras['include_sigma_n'];
     }
-  }
 
-  set_parameters(paras) {
-    // this.paras = paras;
-    this.sigma_f = paras['sigma_f'];
-    this.sigma_n = paras['sigma_n'];
-    this.length = paras['length'];
-  }
+    // get sig() {
+    //   return this.sigma_f;
+    // }
 
-  get sig() {
-    return this.sigma_f;
-  }
+    this.squ_exp = (a, b, sigma_f, sigma_n, length) => {
+      let diff = a - b;
+      let covariance = this.sigma_f * this.sigma_f * Math.exp(-(diff * diff) / (2 * this.length));
+      // Incorproate Kronecker delta function
+      if (a != b || !this.include_sigma_n)
+        return covariance;
+      else
+        return covariance + this.sigma_n * this.sigma_n;
+    }
 
-  squ_exp(a, b, sigma_f, sigma_n, length) {
-    var self = Kernels.prototype;
-    var diff = a - b;
-    var covariance = self.sigma_f * self.sigma_f * Math.exp(-(diff * diff) / (2 * self.length));
-    // Incorproate Kronecker delta function
-    if (a != b || !self.include_sigma_n)
-      return covariance;
-    else
-      return covariance + self.sigma_n * self.sigma_n;
+    this.include_sigma_n = true;
+    if (paras)
+      this.set_parameters(paras)
   }
 }
 
-var a = new Kernels();
-console.log(a);
-console.log(a.squ_exp(2, 4));
+// var a = new Kernels();
 
 
 module.exports = Kernels;
