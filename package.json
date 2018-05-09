@@ -8,7 +8,7 @@
     "numjs": "^0.15.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node test.js",
     "package:browserify": "browserify ./src/index.js -o ./dist/gaussproc.js",
     "package:minify": "minify ./dist/gaussproc.js -o ./dist/gaussproc.min.js",
     "package": "npm run package:browserify && npm run package:minify",
