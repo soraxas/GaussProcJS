@@ -6,15 +6,11 @@ class Kernels {
   constructor(paras) {
 
     this.set_parameters = (paras) => {
-      this.sigma_f         = paras['sigma_f'];
-      this.sigma_n         = paras['sigma_n'];
-      this.length          = paras['length'];
+      this.sigma_f = paras['sigma_f'];
+      this.sigma_n = paras['sigma_n'];
+      this.length = paras['length'];
       this.include_sigma_n = paras['include_sigma_n'];
     }
-
-    // get sig() {
-    //   return this.sigma_f;
-    // }
 
     this.squ_exp = (a, b, sigma_f, sigma_n, length) => {
       let diff = a - b;
@@ -31,9 +27,6 @@ class Kernels {
       this.set_parameters(paras)
   }
 }
-
-// var a = new Kernels();
-
 
 module.exports = Kernels;
 // 'use strict';

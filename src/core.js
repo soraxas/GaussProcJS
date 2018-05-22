@@ -1,22 +1,21 @@
-var nj = require('numjs');
+let nj = require('numjs');
 
 function build_K(obs_pts, kernel) {
     if (!kernel)
-        throw Error("kernel is not defined");
-    var shape = obs_pts.shape.concat(obs_pts.shape);
-    var K = nj.zeros(shape);
-    for (var i = 0; i < K.shape[0]; ++i) {
-        for (var j = i; j < K.shape[1]; ++j) {
-            // console.log(K.set(i, j, covariance(obs_pts.get(i), obs_pts.get(j))));
-            var n = kernel(obs_pts.get(i), obs_pts.get(j));
+        throw_kernel_undefined();
+    let shape = obs_pts.shape.concat(obs_pts.shape);
+    let K_matrix = nj.zeros(shape);
+    for (let i = 0; i < K_matrix.shape[0]; ++i) {
+        for (let j = i; j < K_matrix.shape[1]; ++j) {
+            let n = kernel(obs_pts.get(i), obs_pts.get(j));
             // the top right block
-            K.set(i, j, n);
+            K_matrix.set(i, j, n);
             // the bottom left block
-            K.set(j, i, n);
+            K_matrix.set(j, i, n);
         }
     }
     // console.log(K);
-    return K
+    return K_matrix
 }
 
 /**
@@ -27,20 +26,20 @@ function build_K(obs_pts, kernel) {
  */
 function build_K_inference(obs_pts, inf_pts, kernel) {
     if (!kernel)
-        throw Error("kernel is not defined");
-    var K_1 = nj.zeros(inf_pts.shape.concat(obs_pts.shape));
-    var K_2 = nj.zeros(inf_pts.shape.concat(inf_pts.shape));
+        throw_kernel_undefined();
+    let K_1 = nj.zeros(inf_pts.shape.concat(obs_pts.shape));
+    let K_2 = nj.zeros(inf_pts.shape.concat(inf_pts.shape));
     // go through each inferencing point and build K_1 matrix
-    for (var i = 0; i < inf_pts.shape[0]; ++i) {
-        for (var j = 0; j < obs_pts.shape[0]; ++j) {
-            var n = kernel(obs_pts.get(j), inf_pts.get(i));
+    for (let i = 0; i < inf_pts.shape[0]; ++i) {
+        for (let j = 0; j < obs_pts.shape[0]; ++j) {
+            let n = kernel(obs_pts.get(j), inf_pts.get(i));
             K_1.set(i, j, n);
         }
     }
     // go through each inferencing point and build K_2 matrix
-    for (var i = 0; i < inf_pts.shape[0]; ++i) {
-        for (var j = i; j < inf_pts.shape[0]; ++j) {
-            var n = kernel(inf_pts.get(i), inf_pts.get(j));
+    for (let i = 0; i < inf_pts.shape[0]; ++i) {
+        for (let j = i; j < inf_pts.shape[0]; ++j) {
+            let n = kernel(inf_pts.get(i), inf_pts.get(j));
             // the top right block
             K_2.set(i, j, n);
             // the bottom left block
@@ -50,8 +49,8 @@ function build_K_inference(obs_pts, inf_pts, kernel) {
     return [K_1, K_2]
 }
 
-function throw_error_undefined() {
-    throw Error("kernel is not defined");
+function throw_kernel_undefined() {
+    throw ReferenceError("kernel is not defined");
 }
 
 module.exports = {

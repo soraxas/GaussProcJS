@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "dependencies": {
     "browserify-shim": "^3.8.14",
+    "ndarray-cholesky-factorization": "^1.0.2",
     "numjs": "^0.15.1"
   },
   "scripts": {
